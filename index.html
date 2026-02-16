@@ -3,27 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSINT Tools Dashboard</title>
+    <title>My OSINT Dashboard</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f9; padding: 20px; }
-        .container { max-width: 800px; margin: auto; }
-        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-        a { text-decoration: none; color: #007bff; font-weight: bold; }
-        a:hover { color: #0056b3; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        .header p {
+            color: #666;
+            margin-top: 5px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .app-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .app-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .app-desc {
+            font-size: 0.7rem;
+            color: #888;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>OSINT Tools Portfolio</h1>
-        <div class="card"><span>HereWeGo (หาบ้านเลขที่)</span><a href="https://wego.here.com/" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>WhatsMyName (ค้นหา User)</span><a href="https://whatsmyname.app/" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>PimEyes (ค้นหาใบหน้า)</span><a href="https://pimeyes.com/en" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>Jimpl (เช็ค Metadata)</span><a href="https://jimpl.com/" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>DorkGPT (สร้างคำค้นหา)</span><a href="https://www.dorkgpt.com/" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>CommentPicker (หา ID โซเชียล)</span><a href="https://commentpicker.com/" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>FotoForensics (วิเคราะห์ภาพ)</span><a href="https://fotoforensics.com/" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>IntelTechniques (สืบค้นข้อมูล)</span><a href="https://inteltechniques.com/tools/Search.html" target="_blank">เปิดเว็บ</a></div>
-        <div class="card"><span>Shadowmap (วิเคราะห์แสงเงา)</span><a href="https://app.shadowmap.org/" target="_blank">เปิดเว็บ</a></div>
+
+    <div class="header">
+        <h1>OSINT Tools</h1>
+        <p>รวมเครื่องมือสืบค้นข้อมูล</p>
     </div>
+
+    <div class="container">
+        <a href="https://osintframework.com/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=osintframework.com&sz=128" class="app-icon">
+            <div class="app-name">OSINT Frame</div>
+            <div class="app-desc">โครงสร้างสืบค้น</div>
+        </a>
+
+        <a href="https://wego.here.com/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=wego.here.com&sz=128" class="app-icon">
+            <div class="app-name">HereWeGo</div>
+            <div class="app-desc">แผนที่ & บ้านเลขที่</div>
+        </a>
+
+        <a href="https://whatsmyname.app/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=whatsmyname.app&sz=128" class="app-icon">
+            <div class="app-name">WhatsMyName</div>
+            <div class="app-desc">ค้นหา Username</div>
+        </a>
+
+        <a href="https://pimeyes.com/en" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=pimeyes.com&sz=128" class="app-icon">
+            <div class="app-name">PimEyes</div>
+            <div class="app-desc">ค้นหาใบหน้า</div>
+        </a>
+
+        <a href="https://jimpl.com/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=jimpl.com&sz=128" class="app-icon">
+            <div class="app-name">Jimpl</div>
+            <div class="app-desc">เช็ค Metadata</div>
+        </a>
+
+        <a href="https://www.dorkgpt.com/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=dorkgpt.com&sz=128" class="app-icon">
+            <div class="app-name">DorkGPT</div>
+            <div class="app-desc">สร้างคำค้นหา</div>
+        </a>
+
+        <a href="https://commentpicker.com/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=commentpicker.com&sz=128" class="app-icon">
+            <div class="app-name">CommentPicker</div>
+            <div class="app-desc">หา ID โซเชียล</div>
+        </a>
+
+        <a href="https://fotoforensics.com/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=fotoforensics.com&sz=128" class="app-icon">
+            <div class="app-name">FotoForensics</div>
+            <div class="app-desc">วิเคราะห์ภาพ</div>
+        </a>
+
+        <a href="https://inteltechniques.com/tools/Search.html" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=inteltechniques.com&sz=128" class="app-icon">
+            <div class="app-name">IntelTech</div>
+            <div class="app-desc">รวมเครื่องมือ</div>
+        </a>
+
+        <a href="https://app.shadowmap.org/" target="_blank" class="app-card">
+            <img src="https://www.google.com/s2/favicons?domain=app.shadowmap.org&sz=128" class="app-icon">
+            <div class="app-name">Shadowmap</div>
+            <div class="app-desc">วิเคราะห์เงา</div>
+        </a>
+    </div>
+
 </body>
 </html>
