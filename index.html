@@ -6,20 +6,28 @@
     <title>My OSINT Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .modal {
-            transition: opacity 0.25s ease;
-        }
+        /* จัดการเรื่อง Scroll ของฉากหลัง */
         body.modal-active {
             overflow-x: hidden;
             overflow-y: hidden !important;
         }
+        /* แอนิเมชันพื้นหลัง Pop-up */
+        .modal-backdrop-anim {
+            transition: opacity 0.3s ease-out;
+        }
+        /* แอนิเมชันตัวกล่อง Pop-up (เด้งซูม) */
+        .modal-box-anim {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
     </style>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal pb-40">
+<body class="bg-[#f8f9fa] font-sans leading-normal tracking-normal pb-40">
 
-    <header class="w-full text-center py-8 bg-white shadow-sm mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">OSINT Intelligence</h1>
-        <p class="text-sm text-gray-500 mt-2">ศูนย์รวมเครื่องมือสืบค้นและวิเคราะห์ข้อมูลเปิดสาธารณะ</p>
+    <header class="w-full text-center py-10 bg-white shadow-sm mb-6 rounded-b-3xl">
+        <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+            OSINT Intelligence
+        </h1>
+        <p class="text-sm text-gray-500 mt-2 font-medium">ศูนย์รวมเครื่องมือสืบค้นและวิเคราะห์ข้อมูลเปิดสาธารณะ</p>
     </header>
 
     <main class="container mx-auto px-4 max-w-5xl">
@@ -27,33 +35,38 @@
             </div>
     </main>
 
-    <footer class="fixed bottom-0 w-full bg-white border-t border-gray-200 p-4 text-center z-40 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-        <p class="text-xs text-gray-500 mb-2">สแกนเพื่อบันทึกหรือแชร์หน้า Dashboard นี้</p>
-        <img src="QR.png" alt="QR Code" class="w-24 h-auto mx-auto border border-gray-200 rounded p-1 shadow-sm">
+    <footer class="fixed bottom-0 w-full bg-white border-t border-gray-100 p-4 text-center z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.03)] rounded-t-3xl">
+        <p class="text-xs text-gray-500 mb-2 font-medium">สแกนเพื่อบันทึกหรือแชร์หน้า Dashboard นี้</p>
+        <img src="QR.png" alt="QR Code" class="w-24 h-auto mx-auto border-2 border-purple-100 rounded-xl p-1 shadow-sm">
         <p class="text-[10px] text-gray-400 mt-2">&copy; 2026 OSINT Tools Dashboard</p>
     </footer>
 
-    <div id="modal-backdrop" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
-        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div id="modal-backdrop" class="modal-backdrop-anim opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 px-4">
+        <div class="absolute w-full h-full bg-gray-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
         
-        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-xl shadow-lg z-50 overflow-y-auto">
-            <div class="modal-content py-6 text-left px-6">
-                <div class="flex justify-between items-center pb-3">
-                    <p id="modal-title" class="text-2xl font-bold text-gray-800"></p>
-                    <div class="modal-close cursor-pointer z-50" onclick="closeModal()">
-                        <svg class="fill-current text-gray-500 hover:text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18">
-                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-                        </svg>
-                    </div>
+        <div id="modal-box" class="modal-box-anim transform scale-75 opacity-0 bg-white w-full max-w-sm mx-auto rounded-[2rem] shadow-2xl z-50 overflow-hidden">
+            
+            <div class="relative bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 pt-8 pb-6 px-6 text-center">
+                <div class="absolute top-4 right-4 cursor-pointer bg-white/50 hover:bg-white p-2 rounded-full transition-colors" onclick="closeModal()">
+                    <svg class="fill-current text-gray-600" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18">
+                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                    </svg>
                 </div>
-                <div class="my-4">
-                    <p id="modal-desc" class="text-sm text-gray-600 leading-relaxed"></p>
+                
+                <div class="inline-block bg-white p-3 rounded-2xl shadow-sm mb-3">
+                    <img id="modal-icon-display" src="" alt="Icon" class="w-14 h-14 object-contain">
                 </div>
-                <div class="flex justify-end pt-2">
-                    <a id="modal-link" href="#" target="_blank" class="px-4 bg-blue-500 p-2 rounded-lg text-white hover:bg-blue-600 font-semibold transition-colors w-full text-center">
-                        เปิดใช้งานเครื่องมือนี้
-                    </a>
+                <h2 id="modal-title" class="text-2xl font-bold text-gray-800"></h2>
+            </div>
+
+            <div class="p-6 bg-white">
+                <div class="bg-gray-50 rounded-2xl p-4 mb-6 border border-gray-100 shadow-inner">
+                    <p id="modal-desc" class="text-[13px] text-gray-600 leading-relaxed text-center"></p>
                 </div>
+                
+                <a id="modal-link" href="#" target="_blank" class="block w-full py-3.5 px-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold text-center rounded-2xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+                    ✨ เปิดใช้งานเครื่องมือ ✨
+                </a>
             </div>
         </div>
     </div>
@@ -81,7 +94,7 @@
                 shortDesc: "เช็ค Data หลุด",
                 icon: "https://icon.horse/icon/haveibeenpwned.com",
                 url: "https://haveibeenpwned.com/",
-                detail: "ตรวจสอบว่าอีเมลหรือ 'เบอร์โทรศัพท์' ของเป้าหมายเคยหลุดออกมาจากฐานข้อมูลที่ถูกแฮกหรือไม่ (เช่น โดนแฮกจาก Facebook) ทำให้รู้ได้ว่าเป้าหมายใช้เบอร์นี้สมัครบริการอะไรไว้บ้าง (ใส่เบอร์ไทยแบบ +66)"
+                detail: "ตรวจสอบว่าอีเมลหรือ 'เบอร์โทรศัพท์' ของเป้าหมายเคยหลุดออกมาจากฐานข้อมูลที่ถูกแฮกหรือไม่ ทำให้รู้ได้ว่าเป้าหมายใช้เบอร์นี้สมัครบริการอะไรไว้บ้าง (ใส่เบอร์ไทยแบบ +66)"
             },
             {
                 name: "PimEyes",
@@ -90,14 +103,7 @@
                 url: "https://pimeyes.com/en",
                 detail: "สุดยอดเครื่องมือค้นหาใบหน้าด้วย AI เพียงอัปโหลดรูปภาพ ระบบจะสแกนหาใบหน้าที่ตรงกันจากภาพต่างๆ ทั่วอินเทอร์เน็ต ใช้สืบหาตัวตนหรือบัญชีโซเชียลมีเดียอื่นๆ ของบุคคลนั้นได้"
             },
-            {
-                name: "Betaface",
-                shortDesc: "เทียบหน้า 2 รูป",
-                icon: "https://icon.horse/icon/betafaceapi.com",
-                url: "https://www.betafaceapi.com/v2/demo/#compare",
-                detail: "เครื่องมือวิเคราะห์และเปรียบเทียบใบหน้า (Face Comparison) อัปโหลดรูปภาพ 2 รูปเพื่อตรวจสอบว่าเป็นบุคคลคนเดียวกันหรือไม่ โดยระบบจะวิเคราะห์โครงสร้างใบหน้าและบอกเปอร์เซ็นต์ความคล้ายคลึง"
-            },
-            {
+                        {
                 name: "WhatsMyName",
                 shortDesc: "ตามรอย Username",
                 icon: "https://icon.horse/icon/whatsmyname.app",
@@ -152,13 +158,16 @@
 
         osintTools.forEach((tool, index) => {
             const card = document.createElement('div');
-            card.className = "bg-white rounded-xl p-4 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow border border-gray-100 hover:border-blue-200";
+            // ทำการ์ดให้น่ารักขึ้น ขอบมน เงานุ่มๆ
+            card.className = "bg-white rounded-3xl p-5 flex flex-col items-center justify-center text-center cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] transform hover:-translate-y-1 transition-all duration-300 border border-transparent hover:border-purple-100";
             card.onclick = () => openModal(index);
             
             card.innerHTML = `
-                <img src="${tool.icon}" alt="${tool.name}" onerror="this.onerror=null; this.src=fallbackIcon;" class="w-12 h-12 object-contain mb-3 bg-gray-50 rounded p-1">
-                <h3 class="text-sm font-semibold text-gray-800 leading-tight">${tool.name}</h3>
-                <p class="text-[11px] text-gray-500 mt-1">${tool.shortDesc}</p>
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-3 rounded-2xl mb-3">
+                    <img src="${tool.icon}" alt="${tool.name}" onerror="this.onerror=null; this.src=fallbackIcon;" class="w-10 h-10 object-contain mix-blend-multiply">
+                </div>
+                <h3 class="text-[13px] font-bold text-gray-800 leading-tight">${tool.name}</h3>
+                <p class="text-[10px] text-gray-400 mt-1.5 font-medium">${tool.shortDesc}</p>
             `;
             container.appendChild(card);
         });
@@ -169,18 +178,35 @@
             document.getElementById('modal-desc').innerText = tool.detail;
             document.getElementById('modal-link').href = tool.url;
             
-            const modal = document.getElementById('modal-backdrop');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
+            // ดึงโลโก้มาใส่ใน Pop-up พร้อมดัก error กรณีโลโก้พัง
+            const modalIcon = document.getElementById('modal-icon-display');
+            modalIcon.src = tool.icon;
+            modalIcon.onerror = function() { this.src = fallbackIcon; };
+            
+            // เปิด Backdrop
+            const backdrop = document.getElementById('modal-backdrop');
+            backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            
+            // เล่นแอนิเมชันเด้งซูมของกล่อง Pop-up
+            const box = document.getElementById('modal-box');
+            box.classList.remove('scale-75', 'opacity-0');
+            box.classList.add('scale-100', 'opacity-100');
+            
             document.body.classList.add('modal-active');
         }
 
         function closeModal() {
-            const modal = document.getElementById('modal-backdrop');
-            modal.classList.add('opacity-0', 'pointer-events-none');
+            // ปิด Backdrop
+            const backdrop = document.getElementById('modal-backdrop');
+            backdrop.classList.add('opacity-0', 'pointer-events-none');
+            
+            // หุบกล่อง Pop-up กลับ
+            const box = document.getElementById('modal-box');
+            box.classList.remove('scale-100', 'opacity-100');
+            box.classList.add('scale-75', 'opacity-0');
+            
             document.body.classList.remove('modal-active');
         }
-
-        document.querySelector('.modal-overlay').addEventListener('click', closeModal);
     </script>
 
 </body>
