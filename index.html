@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSINT-Tools</title>
+    <title>My OSINT Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* สไตล์เสริมสำหรับ Pop-up Modal */
         .modal {
             transition: opacity 0.25s ease;
         }
@@ -60,7 +59,9 @@
     </div>
 
     <script>
-        // ฐานข้อมูลเครื่องมือ OSINT พร้อมคำอธิบายแบบละเอียด
+        // โลโก้สำรอง (รูปแว่นขยาย) โหลดไวทันทีไม่ต้องรอเซิร์ฟเวอร์
+        const fallbackIcon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3E%3C/path%3E%3C/svg%3E";
+
         const osintTools = [
             {
                 name: "OSINT Framework",
@@ -89,13 +90,6 @@
                 icon: "https://icon.horse/icon/pimeyes.com",
                 url: "https://pimeyes.com/en",
                 detail: "สุดยอดเครื่องมือค้นหาใบหน้าด้วย AI เพียงอัปโหลดรูปภาพ ระบบจะสแกนหาใบหน้าที่ตรงกันจากภาพต่างๆ ทั่วอินเทอร์เน็ต ใช้สืบหาตัวตนหรือบัญชีโซเชียลมีเดียอื่นๆ ของบุคคลนั้นได้"
-            },
-            {
-                name: "Betaface",
-                shortDesc: "เทียบหน้า 2 รูป",
-                icon: "https://icon.horse/icon/betafaceapi.com",
-                url: "https://www.betafaceapi.com/v2/demo/#compare",
-                detail: "เครื่องมือวิเคราะห์และเปรียบเทียบใบหน้า (Face Comparison) อัปโหลดรูปภาพ 2 รูปเพื่อตรวจสอบว่าเป็นบุคคลคนเดียวกันหรือไม่ โดยระบบจะวิเคราะห์โครงสร้างใบหน้าและบอกเปอร์เซ็นต์ความคล้ายคลึง"
             },
             {
                 name: "WhatsMyName",
@@ -150,22 +144,20 @@
 
         const container = document.getElementById('tools-container');
 
-        // ฟังก์ชันสร้างการ์ดเครื่องมือแบบ Tailwind
         osintTools.forEach((tool, index) => {
             const card = document.createElement('div');
-            // ปรับ styling ของการ์ดให้คลิกแล้วเรียก Pop-up
             card.className = "bg-white rounded-xl p-4 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow border border-gray-100 hover:border-blue-200";
             card.onclick = () => openModal(index);
             
+            // เพิ่มคำสั่ง onerror ถ้ารูปพังให้สลับไปใช้ fallbackIcon ทันที
             card.innerHTML = `
-                <img src="${tool.icon}" alt="${tool.name}" class="w-12 h-12 object-contain mb-3 bg-gray-50 rounded p-1">
+                <img src="${tool.icon}" alt="${tool.name}" onerror="this.onerror=null; this.src=fallbackIcon;" class="w-12 h-12 object-contain mb-3 bg-gray-50 rounded p-1">
                 <h3 class="text-sm font-semibold text-gray-800 leading-tight">${tool.name}</h3>
                 <p class="text-[11px] text-gray-500 mt-1">${tool.shortDesc}</p>
             `;
             container.appendChild(card);
         });
 
-        // ฟังก์ชันเปิด Pop-up Modal
         function openModal(index) {
             const tool = osintTools[index];
             document.getElementById('modal-title').innerText = tool.name;
@@ -177,14 +169,12 @@
             document.body.classList.add('modal-active');
         }
 
-        // ฟังก์ชันปิด Pop-up Modal
         function closeModal() {
             const modal = document.getElementById('modal-backdrop');
             modal.classList.add('opacity-0', 'pointer-events-none');
             document.body.classList.remove('modal-active');
         }
 
-        // ปิด Pop-up เมื่อคลิกที่พื้นหลังสีดำ
         document.querySelector('.modal-overlay').addEventListener('click', closeModal);
     </script>
 
