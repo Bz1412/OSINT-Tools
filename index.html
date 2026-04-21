@@ -3,196 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSINT Dashboard</title>
+    <title>OSINT-Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 20px 0 0 0;
+        /* สไตล์เสริมสำหรับ Pop-up Modal */
+        .modal {
+            transition: opacity 0.25s ease;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-            padding: 0 20px;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-        }
-        .header p {
-            color: #666;
-            margin-top: 5px;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 15px;
-            max-width: 800px;
-            margin: auto;
-            padding: 0 20px 40px 20px;
-        }
-        .app-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px 10px;
-            text-align: center;
-            text-decoration: none;
-            color: #333;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .app-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .app-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            object-fit: contain; /* เปลี่ยนเป็น contain เพื่อให้โลโก้ไม่โดนตัด */
-            background-color: #fafafa;
-        }
-        .app-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-        .app-desc {
-            font-size: 0.7rem;
-            color: #888;
-        }
-        .qr-section {
-            text-align: center;
-            border-top: 1px solid #ddd;
-            padding: 40px 20px;
-            background: white;
-            margin-top: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .qr-image {
-            max-width: 130px;
-            height: auto;
-            margin-top: 10px;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 8px;
-            background: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        body.modal-active {
+            overflow-x: hidden;
+            overflow-y: hidden !important;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal pb-32">
 
-    <div class="header">
-        <h1>OSINT Tools</h1>
-        <p>รวมเครื่องมือสืบค้นข้อมูล</p>
-    </div>
+    <header class="w-full text-center py-8 bg-white shadow-sm mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">OSINT Intelligence</h1>
+        <p class="text-sm text-gray-500 mt-2">ศูนย์รวมเครื่องมือสืบค้นและวิเคราะห์ข้อมูลเปิดสาธารณะ</p>
+    </header>
 
-    <div class="container">
-        <a href="https://web.getcontact.com/search" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/getcontact.com" class="app-icon">
-            <div class="app-name">GetContact</div>
-            <div class="app-desc">สืบค้นเบอร์โทร</div>
-        </a>
+    <main class="container mx-auto px-4 max-w-5xl">
+        <div id="tools-container" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            </div>
+    </main>
 
-        <a href="https://osintframework.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/osintframework.com" class="app-icon">
-            <div class="app-name">OSINT Frame</div>
-            <div class="app-desc">โครงสร้างสืบค้น</div>
-        </a>
+    <footer class="fixed bottom-0 w-full bg-white border-t border-gray-200 p-4 text-center z-40 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        <p class="text-xs text-gray-500 mb-2">สแกนเพื่อบันทึกหรือแชร์หน้า Dashboard นี้</p>
+        <img src="QR.png" alt="QR Code" class="w-24 h-auto mx-auto border border-gray-200 rounded p-1 shadow-sm">
+        <p class="text-[10px] text-gray-400 mt-2">&copy; 2026 OSINT Tools Dashboard</p>
+    </footer>
 
-        <a href="https://wego.here.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/here.com" class="app-icon">
-            <div class="app-name">HereWeGo</div>
-            <div class="app-desc">แผนที่ & บ้านเลขที่</div>
-        </a>
-
-        <a href="https://whatsmyname.app/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/whatsmyname.app" class="app-icon">
-            <div class="app-name">WhatsMyName</div>
-            <div class="app-desc">ค้นหา Username</div>
-        </a>
-
-        <a href="https://pimeyes.com/en" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/pimeyes.com" class="app-icon">
-            <div class="app-name">PimEyes</div>
-            <div class="app-desc">ค้นหาใบหน้า</div>
-        </a>
-
-        <a href="https://jimpl.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/jimpl.com" class="app-icon">
-            <div class="app-name">Jimpl</div>
-            <div class="app-desc">เช็ค Metadata</div>
-        </a>
-
-        <a href="https://www.dorkgpt.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/dorkgpt.com" class="app-icon">
-            <div class="app-name">DorkGPT</div>
-            <div class="app-desc">สร้างคำค้นหา</div>
-        </a>
-
-        <a href="https://commentpicker.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/commentpicker.com" class="app-icon">
-            <div class="app-name">CommentPicker</div>
-            <div class="app-desc">หา ID โซเชียล</div>
-        </a>
-
-        <a href="https://fotoforensics.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/fotoforensics.com" class="app-icon">
-            <div class="app-name">FotoForensics</div>
-            <div class="app-desc">วิเคราะห์ภาพ</div>
-        </a>
-
-        <a href="https://inteltechniques.com/tools/Search.html" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/inteltechniques.com" class="app-icon">
-            <div class="app-name">IntelTech</div>
-            <div class="app-desc">รวมเครื่องมือ</div>
-        </a>
-
-        <a href="https://app.shadowmap.org/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/shadowmap.org" class="app-icon">
-            <div class="app-name">Shadowmap</div>
-            <div class="app-desc">วิเคราะห์เงา</div>
-        </a>
-
-        <a href="https://urlscan.io/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/urlscan.io" class="app-icon">
-            <div class="app-name">urlscan.io</div>
-            <div class="app-desc">วิเคราะห์โดเมน/เว็บ</div>
-        </a>
-
-        <a href="https://epieos.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/epieos.com" class="app-icon">
-            <div class="app-name">Epieos</div>
-            <div class="app-desc">สืบข้อมูลจากอีเมล</div>
-        </a>
-
-        <a href="https://webmii.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/webmii.com" class="app-icon">
-            <div class="app-name">Webmii</div>
-            <div class="app-desc">ค้นหาชื่อบนเว็บ</div>
-        </a>
-
-        <a href="https://www.social-searcher.com/" target="_blank" class="app-card">
-            <img src="https://icon.horse/icon/social-searcher.com" class="app-icon">
-            <div class="app-name">Social Searcher</div>
-            <div class="app-desc">สืบโซเชียลมีเดีย</div>
-        </a>
+    <div id="modal-backdrop" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
         
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-xl shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-6 text-left px-6">
+                <div class="flex justify-between items-center pb-3">
+                    <p id="modal-title" class="text-2xl font-bold text-gray-800"></p>
+                    <div class="modal-close cursor-pointer z-50" onclick="closeModal()">
+                        <svg class="fill-current text-gray-500 hover:text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18">
+                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <p id="modal-desc" class="text-sm text-gray-600 leading-relaxed"></p>
+                </div>
+                <div class="flex justify-end pt-2">
+                    <a id="modal-link" href="#" target="_blank" class="px-4 bg-blue-500 p-2 rounded-lg text-white hover:bg-blue-600 font-semibold transition-colors w-full text-center">
+                        เปิดใช้งานเครื่องมือนี้
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="qr-section">
-        <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">สแกนเพื่อบันทึกหรือแชร์หน้า Dashboard นี้</p>
-        <img src="QR.png" alt="QR Code สำหรับแชร์" class="qr-image">
-        <p style="color: #bbb; font-size: 0.7rem; margin-top: 15px;">&copy; 2026 OSINT Tools Dashboard</p>
-    </div>
+    <script>
+        // ฐานข้อมูลเครื่องมือ OSINT พร้อมคำอธิบายแบบละเอียด
+        const osintTools = [
+            {
+                name: "OSINT Framework",
+                shortDesc: "โครงสร้างการสืบค้น",
+                icon: "https://icon.horse/icon/osintframework.com",
+                url: "https://osintframework.com/",
+                detail: "แผนผังรวบรวมเครื่องมือ OSINT ที่จัดหมวดหมู่ไว้อย่างเป็นระบบ เหมาะสำหรับผู้เริ่มต้นที่ต้องการหาว่าต้องใช้เครื่องมือไหนในการสืบหาข้อมูลประเภทต่างๆ (เช่น อีเมล, โดเมน, IP, โซเชียลมีเดีย)"
+            },
+            {
+                name: "Webmii",
+                shortDesc: "ค้นหาชื่อบนเว็บ",
+                icon: "https://icon.horse/icon/webmii.com",
+                url: "https://webmii.com/",
+                detail: "พิมพ์ชื่อ-นามสกุลของเป้าหมายลงไป ระบบจะไปกวาดข้อมูลจากเว็บไซต์, ข่าว, โซเชียลมีเดีย และเอกสารสาธารณะต่างๆ ทั่วอินเทอร์เน็ตมารวมไว้ในหน้าเดียว พร้อมประเมินคะแนนการมีตัวตนบนโลกออนไลน์"
+            },
+            {
+                name: "Have I Been Pwned",
+                shortDesc: "เช็ค Data หลุด",
+                icon: "https://icon.horse/icon/haveibeenpwned.com",
+                url: "https://haveibeenpwned.com/",
+                detail: "ตรวจสอบว่าอีเมลหรือ 'เบอร์โทรศัพท์' ของเป้าหมายเคยหลุดออกมาจากฐานข้อมูลที่ถูกแฮกหรือไม่ (เช่น โดนแฮกจาก Facebook) ทำให้รู้ได้ว่าเป้าหมายใช้เบอร์นี้สมัครบริการอะไรไว้บ้าง (ใส่เบอร์ไทยแบบ +66)"
+            },
+            {
+                name: "PimEyes",
+                shortDesc: "ค้นหาใบหน้า",
+                icon: "https://icon.horse/icon/pimeyes.com",
+                url: "https://pimeyes.com/en",
+                detail: "สุดยอดเครื่องมือค้นหาใบหน้าด้วย AI เพียงอัปโหลดรูปภาพ ระบบจะสแกนหาใบหน้าที่ตรงกันจากภาพต่างๆ ทั่วอินเทอร์เน็ต ใช้สืบหาตัวตนหรือบัญชีโซเชียลมีเดียอื่นๆ ของบุคคลนั้นได้"
+            },
+            {
+                name: "Betaface",
+                shortDesc: "เทียบหน้า 2 รูป",
+                icon: "https://icon.horse/icon/betafaceapi.com",
+                url: "https://www.betafaceapi.com/v2/demo/#compare",
+                detail: "เครื่องมือวิเคราะห์และเปรียบเทียบใบหน้า (Face Comparison) อัปโหลดรูปภาพ 2 รูปเพื่อตรวจสอบว่าเป็นบุคคลคนเดียวกันหรือไม่ โดยระบบจะวิเคราะห์โครงสร้างใบหน้าและบอกเปอร์เซ็นต์ความคล้ายคลึง"
+            },
+            {
+                name: "WhatsMyName",
+                shortDesc: "ตามรอย Username",
+                icon: "https://icon.horse/icon/whatsmyname.app",
+                url: "https://whatsmyname.app/",
+                detail: "หากคุณรู้แค่ 'นามแฝง' (Username) ของเป้าหมาย เครื่องมือนี้จะนำชื่อนั้นไปสแกนหาในเว็บไซต์นับร้อยแห่ง เพื่อดูว่าเจ้าตัวแอบไปเปิดบัญชีทิ้งไว้ที่แพลตฟอร์มไหนบ้าง"
+            },
+            {
+                name: "CommentPicker",
+                shortDesc: "หา Social ID",
+                icon: "https://icon.horse/icon/commentpicker.com",
+                url: "https://commentpicker.com/",
+                detail: "ใช้สำหรับค้นหาค่า ID (ตัวเลขที่ซ่อนอยู่) ของบัญชี Facebook, Instagram หรือ YouTube ซึ่งจำเป็นมากในการนำไปใช้ร่วมกับเครื่องมือสืบค้นเฉพาะทางตัวอื่นๆ"
+            },
+            {
+                name: "Jimpl",
+                shortDesc: "เช็คพิกัดภาพ (Exif)",
+                icon: "https://icon.horse/icon/jimpl.com",
+                url: "https://jimpl.com/",
+                detail: "เครื่องมืออ่านข้อมูล Metadata (Exif) ที่ซ่อนอยู่ในไฟล์รูปภาพ เพียงอัปโหลดรูป คุณอาจได้ข้อมูลพิกัด GPS ว่าถ่ายที่ไหน, ถ่ายด้วยกล้องหรือมือถือรุ่นอะไร, และถ่ายเมื่อไหร่"
+            },
+            {
+                name: "HereWeGo",
+                shortDesc: "แผนที่ & บ้านเลขที่",
+                icon: "https://icon.horse/icon/here.com",
+                url: "https://wego.here.com/",
+                detail: "แพลตฟอร์มแผนที่ทางเลือกที่มีความละเอียดสูงในบางพื้นที่ จุดเด่นคือการแสดงโครงสร้างอาคารและ 'เลขที่บ้าน' ที่บางครั้ง Google Maps อาจไม่ได้ระบุไว้อย่างชัดเจน"
+            },
+            {
+                name: "Shadowmap",
+                shortDesc: "วิเคราะห์แสงเงา",
+                icon: "https://icon.horse/icon/shadowmap.org",
+                url: "https://app.shadowmap.org/",
+                detail: "จำลองทิศทางของแสงแดดและเงาแบบ 3 มิติตามเวลาจริงทั่วโลก มีประโยชน์มากในการตรวจสอบว่ารูปภาพเป้าหมายถูกถ่ายในช่วงเวลาใด โดยดูจากทิศทางและมุมของเงา"
+            },
+            {
+                name: "Blacklistseller",
+                shortDesc: "เช็คคนโกง",
+                icon: "https://icon.horse/icon/blacklistseller.com",
+                url: "https://www.blacklistseller.com/",
+                detail: "ฐานข้อมูลเตือนภัยมิจฉาชีพของไทย ใช้ค้นหาชื่อ-นามสกุล หรือเลขบัญชีธนาคาร เพื่อตรวจสอบว่าบุคคลนั้นมีประวัติการฉ้อโกง หรือเคยถูกผู้อื่นแจ้งความอายัดบัญชีไว้หรือไม่"
+            },
+            {
+                name: "DorkGPT",
+                shortDesc: "สร้างคำค้นหาลึก",
+                icon: "https://icon.horse/icon/dorkgpt.com",
+                url: "https://www.dorkgpt.com/",
+                detail: "AI ช่วยเขียนคำสั่ง 'Google Dork' ให้คุณไม่ต้องจำสูตรเอง แค่บอกว่าอยากหาอะไร (เช่น หาไฟล์ PDF ประวัติพนักงานบริษัท X) AI จะสร้างคำค้นหาเฉพาะทางไปให้แปะใน Google ทันที"
+            }
+        ];
+
+        const container = document.getElementById('tools-container');
+
+        // ฟังก์ชันสร้างการ์ดเครื่องมือแบบ Tailwind
+        osintTools.forEach((tool, index) => {
+            const card = document.createElement('div');
+            // ปรับ styling ของการ์ดให้คลิกแล้วเรียก Pop-up
+            card.className = "bg-white rounded-xl p-4 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow border border-gray-100 hover:border-blue-200";
+            card.onclick = () => openModal(index);
+            
+            card.innerHTML = `
+                <img src="${tool.icon}" alt="${tool.name}" class="w-12 h-12 object-contain mb-3 bg-gray-50 rounded p-1">
+                <h3 class="text-sm font-semibold text-gray-800 leading-tight">${tool.name}</h3>
+                <p class="text-[11px] text-gray-500 mt-1">${tool.shortDesc}</p>
+            `;
+            container.appendChild(card);
+        });
+
+        // ฟังก์ชันเปิด Pop-up Modal
+        function openModal(index) {
+            const tool = osintTools[index];
+            document.getElementById('modal-title').innerText = tool.name;
+            document.getElementById('modal-desc').innerText = tool.detail;
+            document.getElementById('modal-link').href = tool.url;
+            
+            const modal = document.getElementById('modal-backdrop');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+        }
+
+        // ฟังก์ชันปิด Pop-up Modal
+        function closeModal() {
+            const modal = document.getElementById('modal-backdrop');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+        }
+
+        // ปิด Pop-up เมื่อคลิกที่พื้นหลังสีดำ
+        document.querySelector('.modal-overlay').addEventListener('click', closeModal);
+    </script>
 
 </body>
 </html>
