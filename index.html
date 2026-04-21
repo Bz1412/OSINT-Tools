@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My OSINT Dashboard</title>
+    <title>OSINT-Tools</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
             margin: 0;
-            padding: 20px 0; /* เพิ่ม padding บนล่าง */
-            padding-bottom: 100px; /* เว้นพื้นที่ให้ footer ด้านล่าง */
+            padding: 20px 0;
+            padding-bottom: 120px; /* เว้นพื้นที่ให้ footer ด้านล่าง */
         }
         .header {
             text-align: center;
@@ -68,10 +68,9 @@
             color: #888;
         }
 
-        /* ส่วนใหม่: Footer พร้อม QR Code */
+        /* ส่วน Footer พร้อม QR Code */
         .qr-section {
             text-align: center;
-            margin-top: 50px;
             border-top: 1px solid #ddd;
             padding: 20px;
             background: white;
@@ -79,11 +78,12 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            box-sizing: border-box; /* สำคัญสำหรับการคำนวณ padding */
+            box-sizing: border-box;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
         }
         .qr-image {
-            max-width: 120px; /* ขนาดของ QR Code */
+            max-width: 100px; /* ขนาดของ QR Code */
             height: auto;
             margin-top: 10px;
             border: 1px solid #ccc;
@@ -163,8 +163,8 @@
     </div>
 
     <div class="qr-section">
-        <p style="color: #666; font-size: 0.85rem; margin-bottom: 8px;">สแกนเพื่อบันทึกหรือแชร์หน้า Dashboard นี้</p>
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA... (และโค้ดข้อมูลรูปภาพของคุณที่นี่) ...AAAABJRU5ErkJggg==" alt="QR Code สำหรับแชร์" class="qr-image">
+        <p style="color: #666; font-size: 0.8rem; margin: 0 0 5px 0;">สแกนเพื่อบันทึกหรือแชร์หน้า Dashboard นี้</p>
+        <img src="QR.png" alt="QR Code สำหรับแชร์" class="qr-image">
     </div>
 
 </body>
